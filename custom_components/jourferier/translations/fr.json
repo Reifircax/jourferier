@@ -3,11 +3,25 @@
     "step": {
       "user": {
         "title": "Jour Férié",
-        "description": "Configurer le capteur pour les jours fériés."
+        "description": "Configurer le capteur pour les jours fériés.",
+        "data": {
+          "weekend_days": "Jours considérés comme week-end"
+        }
       }
     },
     "abort": {
       "single_instance_only": "Une seule instance de cette intégration est autorisée."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Jours de week-end",
+        "description": "Sélectionnez les jours à considérer comme des week-ends.",
+        "data": {
+          "weekend_days": "Jours considérés comme week-end"
+        }
+      }
     }
   },
   "entity": {
@@ -29,6 +43,9 @@
           },
           "days_until": {
             "name": "Jours restants"
+          },
+          "prochain_pont_potentiel": {
+            "name": "Prochain pont potentiel"
           }
         }
       }

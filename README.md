@@ -40,6 +40,7 @@ Affichez si **aujourd’hui ou demain est un jour férié** via des capteurs et 
 
 - 🧩 **Configuration simplifiée**
   - Ajout via l’interface Home Assistant (UI)
+  - Jours de week-end configurables (samedi et dimanche par défaut)
 
 - 🛠️ **Service `jourferier.create_card`**
   - Ajoute automatiquement une carte Lovelace pour le capteur
@@ -64,7 +65,7 @@ Affichez si **aujourd’hui ou demain est un jour férié** via des capteurs et 
 4. Rechercher et installer **Jour Férié**
 5. Redémarrer Home Assistant
 6. Aller dans **Paramètres > Appareils & Services > Ajouter une intégration**
-7. Sélectionner **Jour Férié** (aucune configuration requise)
+7. Sélectionner **Jour Férié**, puis choisir les jours considérés comme week-end
 
 ### 📂 Installation manuelle
 
@@ -79,6 +80,12 @@ Affichez si **aujourd’hui ou demain est un jour férié** via des capteurs et 
 ---
 
 ## 📊 Utilisation
+
+### ⚙️ Configurer les jours de week-end
+
+Lors de l’ajout de l’intégration, sélectionnez les jours à considérer comme des jours de week-end. Par défaut, **samedi** et **dimanche** sont sélectionnés.
+
+Vous pouvez modifier ce réglage ultérieurement depuis **Paramètres > Appareils et services > Jour Férié > Configurer**. Ce choix est utilisé pour calculer `prochain_pont_potentiel`.
 
 ### 🔎 Capteur : `sensor.jour_ferie`
 

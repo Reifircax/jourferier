@@ -9,6 +9,20 @@ ATTR_DATE = "date"
 ATTR_NEXT_HOLIDAY = "next_holiday"
 ATTR_DAYS_UNTIL = "days_until"
 ATTR_PROCHAIN_PONT_POTENTIEL = "prochain_pont_potentiel"
+CONF_WEEKEND_DAYS = "weekend_days"
+DEFAULT_WEEKEND_DAYS = ("saturday", "sunday")
+WEEKEND_DAY_OPTIONS = {
+    "monday": "Lundi",
+    "tuesday": "Mardi",
+    "wednesday": "Mercredi",
+    "thursday": "Jeudi",
+    "friday": "Vendredi",
+    "saturday": "Samedi",
+    "sunday": "Dimanche",
+}
+WEEKEND_DAY_INDEXES = {
+    day: index for index, day in enumerate(WEEKEND_DAY_OPTIONS)
+}
 VERSION = "1.2.0"
 MANUFACTURER = "xav59213"
 DEVICE_MODEL = "Capteur jours fériés dynamique"
@@ -60,19 +74,22 @@ def get_holidays(year: int) -> dict[date, str]:
     }
 
 
-def is_day_off(target_date: date) -> bool:
+def is_day_off(target_date: date, weekend_days: set[int]) -> bool:
     """Retourne True si la date est un week-end ou un jour férié."""
-    return target_date.weekday() >= 5 or target_date in get_holidays(target_date.year)
+    return (
+        target_date.weekday() in weekend_days
+        or target_date in get_holidays(target_date.year)
+    )
 
 
-def get_next_potential_bridge(today: date) -> date | None:
+def get_next_potential_bridge(today: date, weekend_days: set[int]) -> date | None:
     """Retourne la date du prochain jour ouvré entre deux jours de repos."""
     for offset in range(1, 367):
         pont_potentiel = today + timedelta(days=offset)
         if (
-            not is_day_off(pont_potentiel)
-            and is_day_off(pont_potentiel - timedelta(days=1))
-            and is_day_off(pont_potentiel + timedelta(days=1))
+            not is_day_off(pont_potentiel, weekend_days)
+            and is_day_off(pont_potentiel - timedelta(days=1), weekend_days)
+            and is_day_off(pont_potentiel + timedelta(days=1), weekend_days)
         ):
             return pont_potentiel
 
