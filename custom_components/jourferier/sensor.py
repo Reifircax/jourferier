@@ -49,13 +49,13 @@ class JourFerieSensor(SensorEntity):
 
         self._attributes = {
             ATTR_HOLIDAY_NAME: self._state,
-            ATTR_DATE: today.strftime("%d:%m"),
+            ATTR_DATE: today.isoformat(),
             ATTR_NEXT_HOLIDAY: next_holiday,
             ATTR_DAYS_UNTIL: days_until,
             ATTR_PROCHAIN_PONT_POTENTIEL: (
-                next_potential_bridge.strftime("%d:%m")
+                next_potential_bridge.isoformat()
                 if next_potential_bridge
-                else "Aucun"
+                else None
             ),
         }
 

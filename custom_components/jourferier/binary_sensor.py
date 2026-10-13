@@ -31,7 +31,7 @@ class _HolidayBinarySensor(BinarySensorEntity):
         self._attr_is_on = target in holidays
         self._attr_extra_state_attributes = {
             ATTR_HOLIDAY_NAME: holidays.get(target, "Aucun"),
-            ATTR_DATE: target.strftime("%d:%m"),
+            ATTR_DATE: target.isoformat(),
         }
 
 

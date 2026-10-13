@@ -170,10 +170,10 @@ service: jourferier.create_card
 |----------------|---------------------------------------------|
 | `state`        | Nom du jour férié ou `Aucun`                |
 | `holiday_name` | Nom du jour férié actuel                    |
-| `date`         | Date du jour (format `DD:MM`)               |
+| `date`         | Date ISO 8601 (format `YYYY-MM-DD`)         |
 | `next_holiday` | Nom du prochain jour férié                  |
 | `days_until`   | Nombre de jours restants jusqu’au prochain |
-| `prochain_pont_potentiel` | Date (`DD:MM`) du prochain jour ouvré entre deux jours de repos (week-end ou jour férié), ou `Aucun` |
+| `prochain_pont_potentiel` | Date ISO 8601 (`YYYY-MM-DD`) du prochain jour ouvré entre deux jours de repos (week-end ou jour férié), ou `null` |
 
 ---
 
