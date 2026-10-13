@@ -5,21 +5,32 @@ from homeassistant.components.sensor import SensorEntity
 from .const import (
     DOMAIN, SENSOR_NAME, SENSOR_UNIQUE_ID,
     ATTR_HOLIDAY_NAME, ATTR_DATE, ATTR_NEXT_HOLIDAY, ATTR_DAYS_UNTIL,
-    ATTR_PROCHAIN_PONT_POTENTIEL, get_holidays, get_next_potential_bridge,
+    ATTR_PROCHAIN_PONT_POTENTIEL, CONF_WEEKEND_DAYS, DEFAULT_WEEKEND_DAYS,
+    WEEKEND_DAY_INDEXES, get_holidays, get_next_potential_bridge,
 )
 
 _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_entry(hass, entry, async_add_entities):
-    async_add_entities([JourFerieSensor()])
+    weekend_days = entry.options.get(
+        CONF_WEEKEND_DAYS,
+        entry.data.get(CONF_WEEKEND_DAYS, DEFAULT_WEEKEND_DAYS),
+    )
+    weekend_day_indexes = {
+        WEEKEND_DAY_INDEXES[day]
+        for day in weekend_days
+        if day in WEEKEND_DAY_INDEXES
+    }
+    async_add_entities([JourFerieSensor(weekend_day_indexes)])
 
 class JourFerieSensor(SensorEntity):
-    def __init__(self):
+    def __init__(self, weekend_days: set[int]):
         self._attr_name = SENSOR_NAME
         self._attr_unique_id = SENSOR_UNIQUE_ID
         self._attr_icon = "mdi:calendar-star"
         self._state = None
         self._attributes = {}
+        self._weekend_days = weekend_days
         self._attr_device_info = {
             "identifiers": {(DOMAIN, "jourferier")},
             "name": "Jour Férié",
@@ -45,7 +56,7 @@ class JourFerieSensor(SensorEntity):
                 days_until = (holiday_date - today).days
                 break
 
-        next_potential_bridge = get_next_potential_bridge(today)
+        next_potential_bridge = get_next_potential_bridge(today, self._weekend_days)
 
         self._attributes = {
             ATTR_HOLIDAY_NAME: self._state,

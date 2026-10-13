@@ -3,11 +3,25 @@
     "step": {
       "user": {
         "title": "French Public Holiday",
-        "description": "Configure the French public holiday sensor."
+        "description": "Configure the French public holiday sensor.",
+        "data": {
+          "weekend_days": "Weekend days"
+        }
       }
     },
     "abort": {
       "single_instance_only": "Only a single instance of this integration is allowed."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Weekend days",
+        "description": "Select the days that should be treated as weekends.",
+        "data": {
+          "weekend_days": "Weekend days"
+        }
+      }
     }
   },
   "entity": {
